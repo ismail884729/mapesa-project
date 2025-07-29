@@ -1,0 +1,227 @@
+/* General Dashboard Layout */
+.driver-dashboard-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid #dcdcdc;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #1a1a1a;
+}
+
+.header-left svg {
+  color: #007bff;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.user-profile img {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+h1, h2 {
+  margin: 0;
+}
+
+/* Driver Status Controls */
+.driver-status-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #e9ecef;
+  padding: 0.5rem;
+  border-radius: 20px;
+}
+
+.status-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.btn-status {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  color: #495057;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn-status.active {
+  background-color: #ffffff;
+  color: #007bff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Reports List */
+.reports-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.report-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  overflow: hidden;
+  border-left: 6px solid;
+  transition: box-shadow 0.3s ease;
+}
+
+.report-card:hover {
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.report-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+}
+
+.report-id {
+  font-weight: 600;
+  color: #333;
+}
+
+.report-priority {
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+}
+
+.priority-low { border-color: #28a745; }
+.priority-medium { border-color: #ffc107; }
+.priority-high { border-color: #dc3545; }
+
+.priority-low .report-priority { background-color: #28a745; }
+.priority-medium .report-priority { background-color: #ffc107; color: #212529; }
+.priority-high .report-priority { background-color: #dc3545; }
+
+.report-content {
+  padding: 1.5rem;
+}
+
+.report-content h4 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.report-meta {
+  font-size: 0.9rem;
+  color: #555;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1rem;
+  margin-top: 1rem;
+}
+
+.report-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f8f9fa;
+  border-top: 1px solid #eee;
+}
+
+.status-badge {
+  padding: 0.4rem 1rem;
+  border-radius: 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-assigned { background-color: #17a2b8; color: white; }
+.status-en-route { background-color: #007bff; color: white; }
+.status-on-scene { background-color: #ffc107; color: #212529; }
+.status-resolved { background-color: #28a745; color: white; }
+
+.report-actions .btn {
+  font-weight: 600;
+}
+
+.no-reports {
+  text-align: center;
+  padding: 3rem;
+  color: #6c757d;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+.btn-logout {
+  background-color: #f8f9fa;
+  color: #333;
+  border: 1px solid #ddd;
+}
+
+.btn-logout:hover {
+  background-color: #e2e6ea;
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-primary { background-color: #007bff; color: white; }
+.btn-warning { background-color: #ffc107; color: #212529; }
+.btn-success { background-color: #28a745; color: white; }
+.btn-sm { padding: 0.5rem 1rem; font-size: 0.8rem; }

@@ -1,0 +1,75 @@
+{
+  "car": [
+    {
+      "id": 1,
+      "plateNumber": "KBC 123D",
+      "model": "Toyota Axio",
+      "color": "Silver",
+      "driver": "John Doe",
+      "status": "available"
+    },
+    {
+      "id": 2,
+      "plateNumber": "KCA 456E",
+      "model": "Nissan Note",
+      "color": "White",
+      "driver": "Jane Smith",
+      "status": "on-trip"
+    },
+    {
+      "id": 3,
+      "plateNumber": "KDB 789F",
+      "model": "Subaru Impreza",
+      "color": "Blue",
+      "driver": "Peter Jones",
+      "status": "available"
+    }
+  ],
+   "user": [
+    {
+      "id": 1,
+      "firstName": "Admin",
+      "middleName": "",
+      "lastName": "User",
+      "password": "password",
+      "phoneNumber": "123-456-7890",
+      "roles": "admin",
+      "email": "admin@example.com",
+      "address": "",
+      "licenseNumber": "",
+      "status": "active",
+      "carId": 0,
+      "regionId": 0
+    },
+     {
+      "id": 2,
+      "firstName": "Reporter",
+      "middleName": "",
+      "lastName": "One",
+      "password": "password",
+      "phoneNumber": "111-222-3333",
+      "roles": "reporter",
+      "email": "reporter1@example.com",
+      "address": "",
+      "licenseNumber": "",
+      "status": "active",
+      "carId": 0,
+      "regionId": 0
+    },
+    {
+      "id": 3,
+      "firstName": "Driver",
+      "middleName": "",
+      "lastName": "Dan",
+      "password": "password",
+      "phoneNumber": "555-555-5555",
+      "roles": "driver",
+      "email": "driver1@example.com",
+      "address": "",
+      "licenseNumber": "D12345",
+      "status": "available",
+      "carId": 1,
+      "regionId": 0
+    }
+  ]
+}

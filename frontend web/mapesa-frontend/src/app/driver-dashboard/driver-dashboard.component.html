@@ -1,0 +1,67 @@
+<div class="driver-dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M12 1v6m0 6v6m-6-6h12"></path>
+      </svg>
+      <h1>Driver Dashboard</h1>
+    </div>
+    <div class="header-right">
+      <div class="driver-status-controls">
+        <span>Status:</span>
+        <div class="status-buttons">
+          <button class="btn-status" [class.active]="driverStatus === 'available'" (click)="setDriverStatus('available')">Available</button>
+          <button class="btn-status" [class.active]="driverStatus === 'on-trip'" (click)="setDriverStatus('on-trip')">On Trip</button>
+          <button class="btn-status" [class.active]="driverStatus === 'offline'" (click)="setDriverStatus('offline')">Offline</button>
+        </div>
+      </div>
+      <div class="user-profile">
+        <img src="https://via.placeholder.com/32" [alt]="driverName">
+        <span>{{ driverName }}</span>
+      </div>
+      <button class="btn btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h2>Assigned Reports</h2>
+      <div class="location-display">
+        <strong>Current Location:</strong> {{ currentLocation }}
+      </div>
+    </div>
+
+    <!-- Assigned Reports List -->
+    <div class="reports-list">
+      <div class="report-card" *ngFor="let report of assignedReports">
+        <div class="report-header">
+          <div class="report-id">#{{ report.id }}</div>
+        </div>
+        <div class="report-content">
+          <p>{{ report.description }}</p>
+          <div class="report-meta">
+            <span><strong>Location:</strong> {{ report.locationDescription }}</span>
+            <span><strong>Reporter ID:</strong> {{ report.reporterId }}</span>
+            <span><strong>Time:</strong> {{ report.reportedAt | date:'short' }}</span>
+          </div>
+        </div>
+        <div class="report-footer">
+          <div class="report-status">
+            <span class="status-badge" [class]="getStatusClass(report.status)">{{ report.status }}</span>
+          </div>
+          <div class="report-actions">
+            <button *ngIf="report.status === 'PENDING'" class="btn btn-sm btn-primary" (click)="updateReportStatus(report.id, 'ASSIGNED')">Accept</button>
+            <button *ngIf="report.status === 'ASSIGNED'" class="btn btn-sm btn-success" (click)="updateReportStatus(report.id, 'RESOLVED')">Mark as Resolved</button>
+          </div>
+        </div>
+      </div>
+      <div class="no-reports" *ngIf="assignedReports.length === 0">
+        <h3>No Assigned Reports</h3>
+        <p>You are currently free. Enjoy the quiet time!</p>
+      </div>
+    </div>
+  </main>
+</div>

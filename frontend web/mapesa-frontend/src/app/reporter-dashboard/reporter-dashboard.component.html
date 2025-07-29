@@ -1,0 +1,108 @@
+<div class="reporter-dashboard-container">
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="header-left">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+        <path d="M2 17l10 5 10-5"></path>
+        <path d="M2 12l10 5 10-5"></path>
+      </svg>
+      <h1>Reporter Dashboard</h1>
+    </div>
+    <div class="header-right">
+      <div class="user-profile">
+        <img src="https://via.placeholder.com/32" [alt]="reporterName">
+        <span>{{ reporterName }}</span>
+      </div>
+      <button class="btn btn-logout" (click)="logout()">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <div class="content-header">
+      <h2>My Reports</h2>
+      <button class="btn btn-primary" (click)="openReportModal()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+        Submit New Report
+      </button>
+      <button class="btn btn-danger panic-btn" (click)="sendPanicReport()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        PANIC
+      </button>
+    </div>
+
+    <!-- Reports List -->
+    <div class="reports-list">
+      <div class="report-card" *ngFor="let report of myReports" [class]="getStatusClass(report.status)">
+        <div class="report-header">
+          <div class="report-id">#{{ report.id }}</div>
+        </div>
+        <div class="report-content">
+          <p>{{ report.description }}</p>
+          <div class="report-meta">
+            <span><strong>Location:</strong> {{ report.locationDescription }}</span>
+            <span><strong>Time:</strong> {{ report.reportedAt | date:'short' }}</span>
+          </div>
+        </div>
+        <div class="report-footer">
+          <div class="report-status">
+            <span class="status-badge" [class]="getStatusClass(report.status)">{{ report.status }}</span>
+          </div>
+          <div class="report-actions" *ngIf="report.status === 'PENDING'">
+            <button class="btn btn-sm btn-danger" (click)="cancelReport(report.id)">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="no-reports" *ngIf="myReports.length === 0">
+        <p>You have not submitted any reports yet.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Report Submission Modal -->
+<div class="modal-overlay" *ngIf="showReportModal" (click)="closeReportModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Submit a New Report</h3>
+      <button class="close-btn" (click)="closeReportModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="submitReport()">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" [(ngModel)]="newReport.description" name="description" rows="4" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="locationDescription">Location Description</label>
+          <input type="text" id="locationDescription" [(ngModel)]="newReport.locationDescription" name="locationDescription" required>
+        </div>
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input type="number" id="latitude" [(ngModel)]="newReport.latitude" name="latitude" required>
+        </div>
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input type="number" id="longitude" [(ngModel)]="newReport.longitude" name="longitude" required>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn btn-secondary" (click)="closeReportModal()">Cancel</button>
+          <button type="submit" class="btn btn-primary">Submit Report</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
