@@ -58,4 +58,16 @@ export class EmergencyService {
   completeEmergency(emergencyId: number, driverId: number): Observable<Emergency> {
     return this.http.post<Emergency>(`${this.apiUrl}/${emergencyId}/complete/${driverId}`, {});
   }
+
+  getAssignedEmergencies(driverId: number): Observable<Emergency[]> {
+    return this.http.get<Emergency[]>(`${this.apiUrl}/driver/${driverId}/assigned`);
+  }
+
+  getEmergencyDriverByReporter(emergencyId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/reporter/${emergencyId}/driver`);
+  }
+
+  getEmergency(id: number): Observable<Emergency> {
+    return this.http.get<Emergency>(`${this.apiUrl}/${id}`);
+  }
 }

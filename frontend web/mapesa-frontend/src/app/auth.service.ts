@@ -39,6 +39,24 @@ export class AuthService {
   }
 
   logout(): void {
-    // Clear user data from storage
+    localStorage.removeItem('currentUser');
+  }
+
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('currentUser');
+  }
+
+  getCurrentUser(): any | null {
+    const user = localStorage.getItem('currentUser');
+    return user ? JSON.parse(user) : null;
+  }
+
+  getLoggedInUserId(): number | null {
+    const user = this.getCurrentUser();
+    return user ? user.id : null;
+  }
+
+  storeUser(user: any): void {
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 }

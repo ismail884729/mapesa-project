@@ -22,13 +22,6 @@
   <main class="main-content">
     <div class="content-header">
       <h2>My Reports</h2>
-      <button class="btn btn-primary" (click)="openReportModal()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-        Submit New Report
-      </button>
       <button class="btn btn-danger panic-btn" (click)="sendPanicReport()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="10"></circle>
@@ -59,12 +52,38 @@
           <div class="report-actions" *ngIf="report.status === 'PENDING'">
             <button class="btn btn-sm btn-danger" (click)="cancelReport(report.id)">Cancel</button>
           </div>
+          <div class="report-actions" *ngIf="report.status === 'ASSIGNED' || report.status === 'RESOLVED'">
+            <button class="btn btn-sm btn-primary" (click)="viewAssignedDriver(report.id)">View Driver</button>
+          </div>
         </div>
       </div>
       <div class="no-reports" *ngIf="myReports.length === 0">
         <p>You have not submitted any reports yet.</p>
+  </div>
+</div>
+
+<!-- Assigned Driver Modal -->
+<div class="modal-overlay" *ngIf="showDriverModal" (click)="closeDriverModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Assigned Driver Details</h3>
+      <button class="close-btn" (click)="closeDriverModal()">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    <div class="modal-body" *ngIf="assignedDriver">
+      <div class="driver-details">
+        <p><strong>Name:</strong> {{ assignedDriver.firstName }} {{ assignedDriver.lastName }}</p>
+        <p><strong>Phone:</strong> {{ assignedDriver.phoneNumber }}</p>
+        <p><strong>License Plate:</strong> {{ assignedDriver.licenseNumber }}</p>
+        <p><strong>Car Model:</strong> {{ assignedDriver.carId }}</p>
       </div>
     </div>
+  </div>
+</div>
   </main>
 </div>
 

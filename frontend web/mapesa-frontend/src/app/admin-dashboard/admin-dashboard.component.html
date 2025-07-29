@@ -525,26 +525,28 @@
             </div>
           </div>
           <div class="report-actions" *ngIf="report.emergency.status === 'PENDING'">
-            <select #driverSelect>
+            <select [(ngModel)]="selectedDriverId[report.emergency.id]">
+              <option value="" disabled>Select a driver</option>
               <option *ngFor="let driver of availableDrivers" [value]="driver.id">
                 {{driver.firstName}} {{driver.lastName}}
               </option>
             </select>
-            <button class="btn btn-success" (click)="assignReport(report.emergency.id, +driverSelect.value)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="20,6 9,17 4,12"></polyline>
-              </svg>
-              Assign
-            </button>
-            <button class="btn btn-danger" (click)="rejectReport(report.emergency.id)">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <line x1="18" y1="6" x2="6" y2="18"></line>
-                <line x1="6" y1="6" x2="18" y2="18"></line>
-              </svg>
-              Reject
-            </button>
+            <div class="report-actions-buttons">
+              <button class="btn btn-success" (click)="assignAndApproveReport(report.emergency.id, selectedDriverId[report.emergency.id])" [disabled]="!selectedDriverId[report.emergency.id]">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="20,6 9,17 4,12"></polyline>
+                </svg>
+                Assign & Approve
+              </button>
+              <button class="btn btn-danger" (click)="rejectReport(report.emergency.id)">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+                Reject
+              </button>
+            </div>
           </div>
->>>>>>> Stashed changes
           <div class="report-status" *ngIf="report.emergency.status !== 'PENDING'">
             <span class="status-badge" [class]="getStatusClass(report.emergency.status ?? '')">{{report.emergency.status | titlecase}}</span>
             <span *ngIf="report.driver" class="assigned-driver">

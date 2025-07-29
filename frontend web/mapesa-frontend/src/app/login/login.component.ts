@@ -39,9 +39,7 @@ export class LoginComponent {
         console.log('Login response:', response);
         
         // Store user data if needed (localStorage, sessionStorage, or service)
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('user', JSON.stringify(response));
-        }
+        this.authService.storeUser(response);
         
         // Navigate based on role (API returns uppercase roles)
         if (response && response.roles) {

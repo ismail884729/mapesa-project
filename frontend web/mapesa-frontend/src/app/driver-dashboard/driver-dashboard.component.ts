@@ -30,15 +30,17 @@ export class DriverDashboardComponent implements OnInit {
   }
 
   fetchAssignedReports() {
-    // Assuming driverId is 1 for now
-    this.emergencyService.getAllEmergencies().subscribe({
-      next: (emergencies) => {
-        this.assignedReports = emergencies.filter(e => e.driver && e.driver.id === 1);
-      },
-      error: (error) => {
-        console.error('Error loading assigned reports:', error);
-      }
-    });
+    const driverId = this.authService.getLoggedInUserId();
+    if (driverId) {
+      this.emergencyService.getAssignedEmergencies(driverId).subscribe({
+        next: (emergencies) => {
+          this.assignedReports = emergencies;
+        },
+        error: (error) => {
+          console.error('Error loading assigned reports:', error);
+        }
+      });
+    }
   }
 
   setDriverStatus(status: 'available' | 'on-trip' | 'offline') {
@@ -52,10 +54,12 @@ export class DriverDashboardComponent implements OnInit {
       report.status = newStatus;
       console.log(`Report ${reportId} status updated to: ${newStatus}`);
       if (newStatus === 'RESOLVED') {
-        // Assuming driverId is 1 for now
-        this.emergencyService.completeEmergency(reportId, 1).subscribe(() => {
-          this.fetchAssignedReports();
-        });
+        const driverId = this.authService.getLoggedInUserId();
+        if (driverId) {
+          this.emergencyService.completeEmergency(reportId, driverId).subscribe(() => {
+            this.fetchAssignedReports();
+          });
+        }
       }
     }
   }

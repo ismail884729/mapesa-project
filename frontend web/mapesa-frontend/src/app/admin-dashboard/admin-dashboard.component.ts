@@ -38,6 +38,7 @@ export class AdminDashboardComponent implements OnInit {
   emergencies: any[] = [];
   activeDrivers: any[] = [];
   availableDrivers: User[] = [];
+  selectedDriverId: { [emergencyId: number]: number } = {};
 
   showModal: boolean = false;
   showConfirmModal: boolean = false;
@@ -83,7 +84,7 @@ export class AdminDashboardComponent implements OnInit {
         
         // Filter reporters and available drivers
         this.reporters = this.users.filter(user => user.roles === 'REPORTER');
-        this.availableDrivers = this.drivers.filter(driver => driver.status === 'available');
+        this.availableDrivers = this.drivers;
         
         // Initialize mock emergency reports with real data context
         this.initializeEmergencyReports();
@@ -427,10 +428,35 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  assignReport(emergencyId: number, driverId: number): void {
-    // Assuming dispatcherId 1 for now
-    this.emergencyService.assignEmergency(emergencyId, driverId, 1).subscribe(() => {
-      this.loadEmergencies().subscribe(emergencies => this.emergencies = emergencies);
+  assignAndApproveReport(emergencyId: number, driverId: number): void {
+    const dispatcherId = this.authService.getLoggedInUserId();
+    if (!dispatcherId) {
+      this.error = 'Dispatcher not found. Please log in again.';
+      return;
+    }
+
+    this.loading = true;
+    this.emergencyService.assignEmergency(emergencyId, driverId, dispatcherId).subscribe({
+      next: () => {
+        this.emergencyService.approveEmergency(emergencyId, dispatcherId).subscribe({
+          next: () => {
+            this.loadEmergencies().subscribe(emergencies => {
+              this.emergencies = emergencies;
+              this.loading = false;
+            });
+          },
+          error: (error) => {
+            console.error('Error approving emergency:', error);
+            this.error = 'Failed to approve emergency.';
+            this.loading = false;
+          }
+        });
+      },
+      error: (error) => {
+        console.error('Error assigning emergency:', error);
+        this.error = 'Failed to assign emergency.';
+        this.loading = false;
+      }
     });
   }
 
